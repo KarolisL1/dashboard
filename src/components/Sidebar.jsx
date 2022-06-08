@@ -11,18 +11,16 @@ const Sidebar = () => {
   const { activeMenu, setActiveMenu, screenSize } = useStateContext();
 
   const handleCloseSidebar = () => {
-    if(activeMenu !== undefined && screenSize <= 900) {
+    if (activeMenu !== undefined && screenSize <= 900) {
       setActiveMenu(false);
-    };
+    }
   };
 
-  const activeLink = "flex items-center gap-5 pl-4 pt-3 pb-3 pb-2.5 rounded-lg text-white text-md m-2";
-  const normalLink = "flex items-center gap-5 pl-4 pt-3 pb-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2";
+  const activeLink = "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-white text-md m-2";
+  const normalLink = "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2";
 
   return (
-    <div className='ml-3 h-screen 
-    md:overflow-hidden overflow-auto
-    md:hover:overflow-auto pb-10'>
+    <div className='ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10'>
       {activeMenu && (
       <>
         <div className='flex justify-between items-center'>
@@ -30,7 +28,11 @@ const Sidebar = () => {
             <SiShopware/> <span>Shoppy</span>
           </Link>
           <TooltipComponent content="Menu" position="BottomCenter">
-            <button type="button" onClick={() => setActiveMenu(!activeMenu)} className="relative text-xl rounded-full p-3 hover:bg-light-gray">
+            <button 
+              type="button" 
+              onClick={() => setActiveMenu(!activeMenu)} 
+              className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden"
+            >
               <MdOutlineCancel />
             </button>
           </TooltipComponent>
@@ -38,7 +40,7 @@ const Sidebar = () => {
         <div className="mt-10">
           {links.map((item) => (
             <div key={item.title}>
-              <p className="text-gray-400 m-3 mt-4 uppercase">
+              <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
                 {item.title}
               </p>
               {item.links.map((link) => (
@@ -46,7 +48,7 @@ const Sidebar = () => {
                   to={`/${link.name}`}
                   key={link.name}
                   onClick={handleCloseSidebar}
-                  className={({ isActive }) => (isActive ? activeLink : normalLink)}
+                  className={({ activeMenu }) => (activeMenu ? activeLink : normalLink)}
                 >
                   {link.icon}
                   <span className="capitalize">{link.name}</span>
@@ -58,7 +60,7 @@ const Sidebar = () => {
       </>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default Sidebar
